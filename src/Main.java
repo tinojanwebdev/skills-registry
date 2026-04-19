@@ -52,12 +52,28 @@ public class Main {
         String name = sc.nextLine();
         System.out.print("Enter Skill: ");
         String skill = sc.nextLine();
-        System.out.print("Enter Contact: ");
+        System.out.print("Enter Contact Number: ");
         String contact = sc.nextLine();
 
         if (nic.isEmpty() || name.isEmpty() || skill.isEmpty() || contact.isEmpty()) {
             System.out.println("Error: All fields are required!");
-        } else {
+            return;
+        }
+
+        // Check contact contains only digits
+        boolean validContact = true;
+        for (int i = 0; i < contact.length(); i++) {
+            if (contact.charAt(i) < '0' || contact.charAt(i) > '9') {
+                validContact = false;
+                break;
+            }
+        }
+        if (!validContact) {
+            System.out.println("Error: Contact must contain only numbers!");
+            return;
+        }
+
+        {
             registry.add(new Professional(nic, name, skill, contact));
             System.out.println("Successfully Registered!");
         }
@@ -92,7 +108,21 @@ public class Main {
             Professional p = registry.get(i);
             if (p.nic.equalsIgnoreCase(nic)) {
                 System.out.print("Enter New Contact Number: ");
-                p.contact = sc.nextLine();
+                String newContact = sc.nextLine();
+
+                boolean validC = true;
+                for (int j = 0; j < newContact.length(); j++) {
+                    if (newContact.charAt(j) < '0' || newContact.charAt(j) > '9') {
+                        validC = false;
+                        break;
+                    }
+                }
+                if (!validC) {
+                    System.out.println("Error: Contact must contain only numbers!");
+                    return;
+                }
+
+                p.contact = newContact;
                 System.out.println("Contact updated successfully!");
                 updated = true;
                 break;

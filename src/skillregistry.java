@@ -14,7 +14,7 @@ class Professional {
     }
 }
 
-public class Main {
+public class skillregistry {
 
     static ArrayList<Professional> registry = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
@@ -60,7 +60,11 @@ public class Main {
             return;
         }
 
-        // Check contact contains only digits
+        // Check contact is exactly 10 digits
+        if (contact.length() != 10) {
+            System.out.println("Error: Contact must be exactly 10 digits!");
+            return;
+        }
         boolean validContact = true;
         for (int i = 0; i < contact.length(); i++) {
             if (contact.charAt(i) < '0' || contact.charAt(i) > '9') {
@@ -110,6 +114,17 @@ public class Main {
                 System.out.print("Enter New Contact Number: ");
                 String newContact = sc.nextLine();
 
+                // Check if number already used by anyone
+                for (int k = 0; k < registry.size(); k++) {
+                    if (registry.get(k).contact.equals(newContact)) {
+                        System.out.println("Error: This contact number is already registered!");
+                        return;
+                    }
+                }
+                if (newContact.length() != 10) {
+                    System.out.println("Error: Contact must be exactly 10 digits!");
+                    return;
+                }
                 boolean validC = true;
                 for (int j = 0; j < newContact.length(); j++) {
                     if (newContact.charAt(j) < '0' || newContact.charAt(j) > '9') {
